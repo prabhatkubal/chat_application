@@ -8,7 +8,8 @@ import { LOGOUT_USER } from "../../../../gql/mutations/auth/logoutUser";
 import { useMutation } from "@apollo/client";
 import UserListItem from "../UserListItem/UserListItem";
 import { Settings } from "../../../../constants/paths";
-// import { user_details } from "../../../../utils/getUserDetails";
+import { useUserDetails } from "../../../../hooks/useUserDetails";
+import { useThemeContext } from "../../../../theme/themeContext";
 
 const Hamburger = styled.div``;
 
@@ -92,36 +93,25 @@ const HamburgerMenuItem = styled.li`
 const HamburgerMenuIcon = ({
   isOpen,
   onClick,
-  onToggleTheme,
   onOutsideClick,
 }: {
   isOpen: boolean;
   onClick: () => void;
-  onToggleTheme: () => void;
   onOutsideClick: () => void;
 }) => {
-  const user_details = typeof window !== "undefined"
-      ? JSON.parse(localStorage.getItem("user_details"))
-      : null;
+  const user_details = useUserDetails();
   const router = useRouter();
-  const [hydrated, setHydrated] = useState(false);
-  const [isChecked, setIsChecked] = useState(false);
-  const { toggleTheme } = useToggleTheme();
-  const [logoutuser, { loading: loginLoading, error: loginError }] =
+  const { toggleTheme, isDarkMode } = useThemeContext();
+  const [logoutUser, { loading: logoutLoading, error: logoutError   }] =
     useMutation(LOGOUT_USER);
-
-  useEffect(() => {
-    setHydrated(true);
-  }, []);
 
   const handleSwitchToggle = () => {
     toggleTheme();
-    setIsChecked(!isChecked);
   };
 
   const handleLogout = async () => {
     try {
-      const { data } = await logoutuser();
+      const { data } = await logoutUser();
       console.log(data.message); // Display success message
 
       localStorage.clear();
@@ -136,19 +126,6 @@ const HamburgerMenuIcon = ({
     }
   };
 
-  const SettingsMenuItem = () => {
-    const handleSettingsClick = () => {
-      // Navigate to the /settings page
-      router.push(Settings);
-    };
-
-    return (
-      <HamburgerMenuItem onClick={handleSettingsClick}>
-        Settings
-      </HamburgerMenuItem>
-    );
-  };
-
   return (
     <Hamburger>
       <HamburgerIcon className={isOpen ? "open" : ""} onClick={onClick}>
@@ -157,24 +134,24 @@ const HamburgerMenuIcon = ({
         <div></div>
       </HamburgerIcon>
       <HamburgerMenu className={isOpen ? "open" : ""}>
-        {hydrated && (
-          <UserListItem
-            user={{
-              id: user_details?.id?.toString(),
-              firstname: user_details?.firstname,
-              lastname: user_details?.lastname
-            }}
-            userIconSize={"sm"}
-            userNameFont={"sm"}
-            isOnline={true}
-            isCheckbox={false}
-          />
-        )}
-        <HamburgerMenuItem>Saved Messages</HamburgerMenuItem>
-        <SettingsMenuItem />
+        <UserListItem
+          user={{
+            id: user_details?.id?.toString(),
+            firstname: user_details?.firstname,
+            lastname: user_details?.lastname,
+          }}
+          userIconSize={"sm"}
+          userNameFont={"sm"}
+          isOnline
+          isCheckbox={false}
+        />
+        {/* <HamburgerMenuItem>Saved Messages</HamburgerMenuItem> */}
+        <HamburgerMenuItem onClick={() => router.push(Settings)}>
+          Settings
+        </HamburgerMenuItem>
         <HamburgerMenuItem>
           <Switch
-            isChecked={isChecked}
+            isChecked={isDarkMode}
             handleToggle={handleSwitchToggle}
             tgColor="#ccd3da"
           />
@@ -191,4 +168,4 @@ const HamburgerMenuIcon = ({
   );
 };
 
-export default HamburgerMenuIcon;
+export default React.memo(HamburgerMenuIcon);

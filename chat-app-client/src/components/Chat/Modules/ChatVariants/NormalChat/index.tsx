@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import styled from "styled-components";
 import UserListItem from "../../../SubModules/UserListItem/UserListItem";
 import { Chat } from "../../../../../constants/paths";
-import { user_details } from "../../../../../utils/getUserDetails";
+import { useUserDetails } from "../../../../../hooks/useUserDetails";
 
 const ChatListItem = styled.div`
   position: relative;
@@ -29,6 +29,7 @@ const ChatListItemContainer = styled.div`
 
 const NormalChat = ({ users, onlineUsers, getRecipient, showChatContent }) => {
   const router = useRouter();
+  const user_details = useUserDetails();
 
   const isAuthorized =
     typeof window !== "undefined"

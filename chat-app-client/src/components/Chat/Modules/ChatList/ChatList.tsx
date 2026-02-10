@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import Search from "../../../Common/Search";
-import { useToggleTheme } from "../../../../theme/themeUtilis";
 import apiInstance from "../../../../services/apiInstance";
 import axios from "axios";
 import client from "../../../../services/apiInstance";
@@ -9,7 +8,6 @@ import HamburgerMenuIcon from "../../SubModules/HamburgerIcon/HamburgerIcon";
 import UserListItem from "../../SubModules/UserListItem/UserListItem";
 import ChatListItems from "../ChatListItems/ChatListItems";
 import { Chat } from "../../../../constants/paths";
-import { user_details } from "../../../../utils/getUserDetails";
 import {
   ChatListContainer,
   ChatListControls,
@@ -17,12 +15,13 @@ import {
   Tab,
   TabContainer,
 } from "./Styled";
+import { useUserDetails } from "../../../../hooks/useUserDetails";
 
 const ChatList = ({ users, onlineUsers, getRecipient, showChatContent }) => {
+  const user_details = useUserDetails();
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
   // const [theme, setTheme] = useState(null);
-  const { toggleTheme } = useToggleTheme();
   const [activeTab, setActiveTab] = useState("Chat"); // Initialize with the Chat tab
   const tabNames = ["Chat", "Group Chat", "Blind Chat"]; // Array of all tab names
   const isAuthorized =
@@ -57,7 +56,6 @@ const ChatList = ({ users, onlineUsers, getRecipient, showChatContent }) => {
         <HamburgerMenuIcon
           isOpen={isOpen}
           onClick={handleClick}
-          onToggleTheme={toggleTheme}
           onOutsideClick={() => setIsOpen(false)}
         />
         &nbsp;&nbsp;

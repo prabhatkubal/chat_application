@@ -3,7 +3,6 @@ import { useGoBack } from "../../utils/goBack";
 import { useRouter } from "next/router";
 import UserListItem from "../Chat/SubModules/UserListItem/UserListItem";
 import { BackArrow } from "../../constants/Icons/Icons";
-// import { user_details } from "../../utils/getUserDetails";
 import {
   Label,
   Option,
@@ -13,11 +12,10 @@ import {
   Title,
   ToggleSwitch,
 } from "./Styled";
+import { useUserDetails } from "../../hooks/useUserDetails";
 
 const Settings = () => {
-  const user_details = typeof window !== "undefined"
-      ? JSON.parse(localStorage.getItem("user_details"))
-      : null;
+  const user_details = useUserDetails();
   const [darkMode, setDarkMode] = useState(false);
   const goBack = useGoBack();
   const router = useRouter();

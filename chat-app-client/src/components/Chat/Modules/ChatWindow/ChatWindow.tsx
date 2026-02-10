@@ -28,7 +28,7 @@ import ForwardList from "../../SubModules/ForwardList/ForwardList";
 import ChatMessageOptions from "../../SubModules/ChatMessageOptions/ChatMessageOptions";
 import DeleteMessage from "../../SubModules/DeleteMessage/DeleteMessage";
 import { BackArrow } from "../../../../constants/Icons/Icons";
-import { user_details } from "../../../../utils/getUserDetails";
+import { useUserDetails } from "../../../../hooks/useUserDetails";
 
 const DateDividerWithLine = ({ date }) => {
   return (
@@ -50,6 +50,7 @@ const ChatWindow: React.FC<ChatWindowProps> = ({
   onlineUsers,
   recipient,
 }) => {
+  const user_details = useUserDetails();
   const [state, setState] = useState<ChatWindowState>({
     message: "",
   });

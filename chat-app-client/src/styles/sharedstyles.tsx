@@ -21,7 +21,7 @@ const Main = styled.main`
 const Title = styled.h1`
   margin: 0;
   line-height: 1.15;
-  font-size: 2rem;
+  font-size: 1.5rem;
   text-align: center;
   text-decoration: none;
   margin-bottom:20px;
