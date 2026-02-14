@@ -1,6 +1,4 @@
-import { parse } from "url";
-
-export const getPathFromUrl = (urlString) => {
-  const parsedUrl = parse(urlString); // Use the 'parse' function
+export const getPathFromUrl = (urlString: string) => {
+  const parsedUrl = new URL(urlString);
   return parsedUrl.pathname;
 };
