@@ -1,5 +1,5 @@
 // src/schema/index.js
-const { gql } = require("apollo-server-express");
+const { gql } = require("graphql-tag");
 const userTypes = require("../types/userTypes");
 const messageTypes = require("../types/messageTypes");
 const groupTypes = require("../types/groupTypes");

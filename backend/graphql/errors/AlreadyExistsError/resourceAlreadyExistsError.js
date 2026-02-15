@@ -1,6 +1,5 @@
-const { ApolloError } = require("apollo-server-express");
-
-class ResourceAlreadyExistsError extends ApolloError {
+const { GraphQLError } = require("graphql");
+class ResourceAlreadyExistsError extends GraphQLError {
   constructor(resourceName, conflictingField) {
     const message = `${resourceName} with ${conflictingField} already exists`;
     super(message, "RESOURCE_ALREADY_EXISTS_ERROR");

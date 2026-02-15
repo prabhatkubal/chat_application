@@ -12,7 +12,6 @@ COPY package*.json ./
 RUN npm i yarn
 
 # Install build tools and add bcrypt
-RUN yarn add bcrypt --force
 RUN yarn add nodemon
 RUN yarn
 

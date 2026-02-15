@@ -1,4 +1,4 @@
-const { gql } = require("apollo-server-express");
+const { gql } = require("graphql-tag");
 
 const userTypes = gql`
   type User {
@@ -8,7 +8,6 @@ const userTypes = gql`
     lastname: String!
     username: String!
     email: String!
-    password: String!
     accessToken: String
     createdAt: String!
     updatedAt: String!

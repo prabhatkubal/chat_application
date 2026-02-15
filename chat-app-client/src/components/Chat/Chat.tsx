@@ -21,6 +21,7 @@ interface User {
 
 export default function Chat() {
   const user_details = useUserDetails();
+  console.log(user_details);
   const selectedRecipient =
     typeof window !== "undefined"
       ? JSON.parse(localStorage.getItem("selectedRecipient"))
@@ -32,11 +33,11 @@ export default function Chat() {
   const [newMessage, setNewMessage] = useState(null);
   const [showChatContent, setShowChatContent] = useState(false);
   const [recipientId, setRecipientId] = useState(
-    selectedRecipient?.id ? selectedRecipient?.id : null
+    selectedRecipient?.id ? selectedRecipient?.id : null,
   );
   const [loading, setLoading] = useState(false);
   const [recipient, setRecipient] = useState(
-    selectedRecipient ? selectedRecipient : null
+    selectedRecipient ? selectedRecipient : null,
   );
 
   const { data, client: getUsersClient } = useQuery(GET_USERS);
@@ -54,7 +55,7 @@ export default function Chat() {
         });
 
         const users = data.getUsers.filter(
-          (user) => user.id !== user_details?.id
+          (user) => user.id !== user_details?.id,
         );
         setUsers(users);
       } catch (error) {
@@ -84,17 +85,15 @@ export default function Chat() {
 
   //get messages based on chat selected
   useEffect(() => {
-    if (recipientId !== null) {
-      getMessagesBySenderAndRecipientId(
-        parseInt(`${user_details?.id}`, 10),
-        parseInt(`${recipientId}`, 10)
-      ).then(({ messages, loading }) => {
-        setMessages([]);
-        setMessages([...messages]);
-        setLoading(loading); // Set the loading state in your component
-      });
-    }
-  }, [recipientId]);
+    if (!recipientId || !user_details?.id) return;
+
+    getMessagesBySenderAndRecipientId(
+      Number(user_details.id),
+      Number(recipientId),
+    ).then(({ messages }) => {
+      setMessages(messages);
+    });
+  }, [recipientId, user_details?.id]);
 
   // socket connection
   useEffect(() => {
@@ -145,7 +144,7 @@ export default function Chat() {
         parseInt(`${recipientId}`, 10),
         `${recipientId}_${user_details?.id}`,
         newMessage.message,
-        newMessage.dateTime
+        newMessage.dateTime,
       );
     }
   }, [newMessage]);

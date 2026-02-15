@@ -3,7 +3,6 @@ import styled from "styled-components";
 import Button from "../../../Common/Button";
 import { useRouter } from "next/router";
 import Switch from "../../../Common/SwitchToggle";
-import { useToggleTheme } from "../../../../theme/themeUtilis";
 import { LOGOUT_USER } from "../../../../gql/mutations/auth/logoutUser";
 import { useMutation } from "@apollo/client";
 import UserListItem from "../UserListItem/UserListItem";

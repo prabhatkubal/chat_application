@@ -74,7 +74,7 @@ const UserListItem: React.FC<UserListItemProps> = ({
   //     ? JSON.parse(localStorage.getItem("selectedUser"))
   //     : null;
 
-  console.log(user);
+  // console.log(user);
 
   return (
     <UserListItemContainer>

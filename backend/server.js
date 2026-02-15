@@ -1,5 +1,6 @@
 const express = require("express");
-const { ApolloServer } = require("apollo-server-express");
+const { ApolloServer } = require("@apollo/server");
+const {expressMiddleware} = require("@as-integrations/express5");
 const http = require("http");
 const cors = require("cors");
 const { sequelize } = require("./models");
@@ -24,18 +25,19 @@ async function startApolloServer() {
   const server = new ApolloServer({
     typeDefs,
     resolvers,
-    // context: async ({ req, res }) => ({ req, res }),
-    context: async ({ req }) => {
-      // Get the user object from the token using your authentication logic
-      const user = await getUserFromToken(req);
-
-      // Attach the user object to the context along with the req and res objects
-      return { user, req, res: req.res };
-    },
   });
 
   await server.start();
-  server.applyMiddleware({ app, cors: false });
+
+  app.use(
+    "/graphql",
+    expressMiddleware(server, {
+      context: async ({ req, res }) => {
+        const user = await getUserFromToken(req);
+        return { user, req, res };
+      },
+    })
+  );
 }
 
 startApolloServer()
@@ -97,8 +99,6 @@ function socketioOperations(socket) {
     io.emit("Total-Connected", socketsConnected.size);
   });
 }
-
-app.use(express.json());
 
 // Connection test with the database
 async function connectDatabase() {
