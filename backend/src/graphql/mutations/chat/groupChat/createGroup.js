@@ -1,4 +1,4 @@
-const { Group, User, Member } = require("../../../../models");
+const { Group, User, Member } = require("../../../../../models");
 const { v4: uuidv4 } = require("uuid");
 const NotFoundError = require("../../../errors/NotFound/NotFoundError");
 

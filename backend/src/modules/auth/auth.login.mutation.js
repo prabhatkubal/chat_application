@@ -1,10 +1,7 @@
 const bcrypt = require("bcrypt");
 const { User } = require("../../../models");
-const {
-  generateAccessToken,
-  generateRefreshToken,
-} = require("../../../src/services/Tokens/generateTokenService");
-const { getUserAgent } = require("../../../src/helpers");
+const { getUserAgent } = require("../../helpers");
+const { generateAccessToken, generateRefreshToken } = require("../../services/Tokens/generateTokenService");
 
 const loginUser = {
   Mutation: {

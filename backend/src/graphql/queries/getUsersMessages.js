@@ -1,5 +1,5 @@
 const { Op } = require("sequelize");
-const Message = require("../../models").Message;
+const Message = require("../../../models").Message;
 
 const getUsersMessages = {
   Query: {

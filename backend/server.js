@@ -7,10 +7,11 @@ const { sequelize } = require("./models");
 const { Server } = require("socket.io");
 const corsOptions = require("./src/config/corsOptions");
 const cookieParser = require("cookie-parser");
-const typeDefs = require("./graphql/schema");
-const resolvers = require("./graphql/resolvers");
+const typeDefs = require("./src/graphql/schema");
+const resolvers = require("./src/graphql/resolvers");
 const { customMiddleware } = require("./src/middlewares");
 const getUserFromToken = require("./src/helpers/getUserFromToken");
+const socketIoOperations = require("./src/services/messaging/socketioOperations");
 
 const BACKEND_PORT = process.env.PORT || 4000;
 
@@ -57,48 +58,10 @@ const io = new Server(server, {
   },
 });
 
-io.on("connection", socketioOperations);
-
-let socketsConnected = new Set();
-let onlineUsers = [];
-
-// socket io operations
-function socketioOperations(socket) {
-  console.log(`A user connected ${socket.id}`);
-  socketsConnected.add(socket.id);
-  socket.on("addNewUser", (userId) => {
-    !onlineUsers.some((user) => user.id == userId) &&
-      onlineUsers.push({
-        id: userId,
-        socketId: socket.id,
-      });
-
-    io.emit("getOnlineUsers", onlineUsers);
-  });
-
-  console.log("onlineUsers", onlineUsers);
-
-  socket.on("sendMessage", (message) => {
-    console.log(message.recipientId, message);
-    const user = onlineUsers.find((user) => user.id == message.recipientId);
-    console.log("prabhat", user);
-
-    if (user) {
-      console.log("prabhat");
-      io.to(user.socketId).emit("getMessage", message);
-    }
-  });
-
-  io.emit("Total-Connected", socketsConnected.size);
-
-  socket.on("disconnect", () => {
-    onlineUsers = onlineUsers.filter((user) => user.socketId !== socket.id);
-    io.emit("getOnlineUsers", onlineUsers);
-    console.log(`A user disconnected ${socket.id}`);
-    socketsConnected.delete(socket.id);
-    io.emit("Total-Connected", socketsConnected.size);
-  });
-}
+// io.on("connection", socketIoOperations);
+io.on("connection", (socket) => {
+  socketIoOperations(io, socket);
+});
 
 // Connection test with the database
 async function connectDatabase() {

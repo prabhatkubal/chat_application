@@ -1,4 +1,4 @@
-const { Group, Member, User, GroupMessage } = require("../../../../models");
+const { Group, Member, User, GroupMessage } = require("../../../../../models");
 const {
   AuthenticationError,
 } = require("../../../errors/Authentication/authenticationError");

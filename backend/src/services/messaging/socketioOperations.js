@@ -1,28 +1,14 @@
-const express = require("express");
-const { Server } = require("socket.io");
-const http = require("http");
-const corsOptions = require("../../config/corsOptions");
-
-const app = express();
-const server = http.createServer(app);
-
 let socketsConnected = new Set();
 let onlineUsers = [];
 
-const io = new Server(server, {
-  cors: {
-    ...corsOptions,
-  },
-});
-
-function socketIoOperations(socket) {
+function socketIoOperations(io, socket) {
   console.log(`A user connected ${socket.id}`);
 
   socketsConnected.add(socket.id);
   socket.on("addNewUser", (userId) => {
-    !onlineUsers.some((user) => user.userId === userId) &&
+    !onlineUsers.some((user) => user.id === userId) &&
       onlineUsers.push({
-        userId,
+        id: userId,
         socketId: socket.id,
       });
 
@@ -32,11 +18,13 @@ function socketIoOperations(socket) {
   });
 
   socket.on("sendMessage", (message) => {
-    console.log(message);
+    console.log(message.recipientId, message);
     const user = onlineUsers.find(
-      (user) => user.userId === message.recipientid
+      (user) => user.id === message.recipientid
     );
+    console.log("prabhat", user);
     if (user) {
+      console.log("prabhat");
       io.to(user.socketId).emit("getMessage", message);
     }
   });
