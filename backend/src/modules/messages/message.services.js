@@ -1,17 +1,9 @@
-const { Message } = require("../../../models");
+const { Message } = require("@models");
 
-async function storeMessage({ senderId, recipientId, chatId, message, dateTime }) {
-  const insertedMessage = await Message.create({
-    senderId,
-    recipientId,
-    chatId,
-    message,
-    dateTime,
-  });
-
-  return insertedMessage;
+async function createMessage(data) {
+  return await Message.create(data);
 }
 
 module.exports = {
-  storeMessage,
+  createMessage,
 };

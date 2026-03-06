@@ -1,4 +1,4 @@
-const { Message } = require("../../../models");
+const { Message } = require("@models");
 const messageService = require("./message.services");
 
 const storeUserMessages = {
@@ -8,7 +8,7 @@ const storeUserMessages = {
       { senderId, recipientId, chatId, message, dateTime }
     ) => {
       try {
-        const insertedMessage = await messageService.storeMessage({
+        const insertedMessage = await messageService.createMessage({
           senderId,
           recipientId,
           chatId,
@@ -30,7 +30,7 @@ const storeUserMessages = {
         }
       } catch (err) {
         console.error("Error inserting message:", err);
-        throw new Error("Failed to insert message");
+        throw new Error(`Failed to insert message: ${err.message}`);
       }
     },
   },

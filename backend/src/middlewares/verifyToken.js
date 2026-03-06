@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken");
 const { generateAccessToken } = require("../services/Tokens/generateTokenService");
-const User = require("../../models").User;
+const User = require("@models").User;
 
 async function verifyToken(req, res, next) {
   // Get the token from the request header, query parameter, or cookie

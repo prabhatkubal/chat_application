@@ -10,7 +10,7 @@ const typeDefs = gql`
   ${userTypes}
   ${messageTypes}
   ${groupTypes}
-  ${memberTypess}
+  ${memberTypes}
   ${groupMessageTypes}
 
   type Query {

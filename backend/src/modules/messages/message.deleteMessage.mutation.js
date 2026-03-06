@@ -1,4 +1,4 @@
-const { Message } = require("../../../models");
+const { Message } = require("@models");
 const {
   HTTP_NO_CONTENT,
   HTTP_OK,

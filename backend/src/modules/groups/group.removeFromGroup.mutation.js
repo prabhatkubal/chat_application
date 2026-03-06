@@ -1,4 +1,4 @@
-const { Group, Member } = require("../../../models");
+const { Group, Member } = require("@models");
 
 // Mutation to remove a member from a group
 const removeMemberFromGroup = async (_, { groupId, userId }, { user }) => {

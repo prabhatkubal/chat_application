@@ -10,6 +10,8 @@ const messageTypes = gql`
     dateTime: String!
     createdAt: String!
     updatedAt: String!
+    isEdited: Boolean
+    isDeleted: Boolean
   }
 
   extend type Query {
@@ -32,7 +34,7 @@ const messageTypes = gql`
     insertedMessage: Message
   }
 
-  type Mutation {
+  extend type Mutation {
     deleteMessage(messageId: String!, chatId: String!): DeleteMessageResponse!
   }
 

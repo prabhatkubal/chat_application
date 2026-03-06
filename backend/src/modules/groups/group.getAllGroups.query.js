@@ -1,4 +1,4 @@
-const { Group, Member, User } = require("../../../models");
+const { Group, Member, User } = require("@models");
 const { Op } = require("sequelize");
 
 const getGroups = {

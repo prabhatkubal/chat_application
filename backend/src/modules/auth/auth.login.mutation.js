@@ -1,5 +1,5 @@
 const bcrypt = require("bcrypt");
-const { User } = require("../../../models");
+const { User } = require("@models");
 const { getUserAgent } = require("../../helpers");
 const { generateAccessToken, generateRefreshToken } = require("../../services/Tokens/generateTokenService");
 

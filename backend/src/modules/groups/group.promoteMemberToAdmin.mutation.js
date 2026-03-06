@@ -1,4 +1,4 @@
-const { Group, Member } = require("../../../models");
+const { Group, Member } = require("@models");
 
 // Mutation to promote a member to admin
 const promoteMemberToAdmin = async (_, { groupId, userId }, { user }) => {
