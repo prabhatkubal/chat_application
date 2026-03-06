@@ -86,7 +86,6 @@ export default function Chat() {
   //get messages based on chat selected
   useEffect(() => {
     if (!recipientId || !user_details?.id) return;
-
     getMessagesBySenderAndRecipientId(
       Number(user_details.id),
       Number(recipientId),
