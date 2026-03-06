@@ -1,8 +1,8 @@
-const { Group, User, Member } = require("../../../../../models");
+const { Group, User, Member } = require("../../../models");
 const { v4: uuidv4 } = require("uuid");
-const NotFoundError = require("../../../errors/NotFound/NotFoundError");
+const NotFoundError = require("../../graphql/errors/NotFound/NotFoundError");
 
-const createGroup = {
+const createAGroup = {
   Mutation: {
     createGroup: async (_, { groupName, adminId }, { req, res }) => {
       console.log("something atleast comes here ", groupName, adminId);
@@ -61,4 +61,4 @@ const createGroup = {
   },
 };
 
-module.exports = createGroup;
+module.exports = createAGroup;

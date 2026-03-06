@@ -1,7 +1,7 @@
-const { Group, Member, User } = require("../../../../../models");
+const { Group, Member, User } = require("../../../models");
 const { Op } = require("sequelize");
 
-const getAllGroups = {
+const getGroups = {
   Query: {
     getAllGroups: async (_, {}, { user }) => {
       try {
@@ -58,4 +58,4 @@ const getAllGroups = {
   },
 };
 
-module.exports = getAllGroups;
+module.exports = getGroups;

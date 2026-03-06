@@ -1,12 +1,12 @@
-const { Group, Member, User, GroupMessage } = require("../../../../../models");
+const { Group, Member, User, GroupMessage } = require("../../../models");
 const {
   AuthenticationError,
-} = require("../../../errors/Authentication/authenticationError");
-const ResourceAlreadyExistsError = require("../../../errors/AlreadyExistsError/resourceAlreadyExistsError");
-const NotFoundError = require("../../../errors/NotFound/NotFoundError");
+} = require("../../graphql/errors/Authentication/authenticationError");
+const ResourceAlreadyExistsError = require("../../graphql/errors/AlreadyExistsError/resourceAlreadyExistsError");
+const NotFoundError = require("../../graphql/errors/NotFound/NotFoundError");
 
 // Mutation to add a member to a group
-const addMemberToGroup = {
+const addToGroup = {
   Mutation: {
     addMemberToGroup: async (_, { groupId, userId, adminId }) => {
       try {
@@ -71,4 +71,4 @@ const addMemberToGroup = {
   },
 };
 
-module.exports = addMemberToGroup;
+module.exports = addToGroup;

@@ -1,20 +1,20 @@
-const deleteMessage = require("./chat/message/deleteMessage");
-const createGroup = require("./chat/groupChat/createGroup");
-const addMemberToGroup = require("./chat/groupChat/addMemberToGroup");
-const promoteMemberToAdmin = require("./chat/groupChat/promoteMemberToAdmin");
-const removeMemberFromGroup = require("./chat/groupChat/removeMemberFromGroup");
-const storeUserMessages = require("../../modules/messages/message.mutation");
+const storeUserMessages = require("../../modules/messages/message.storeUserMessages.mutation");
 const signupUser = require("../../modules/auth/auth.signup.mutation");
 const loginUser = require("../../modules/auth/auth.login.mutation");
 const logoutUser = require("../../modules/auth/auth.logout.mutation");
+const deleteSelectedMessage = require("../../modules/messages/message.deleteMessage.mutation");
+const createAGroup = require("../../modules/groups/group.createAGroup.mutation");
+const addToGroup = require("../../modules/groups/group.addMemberToGroup.mutation");
+const promoteMemberToAdmin = require("../../modules/groups/group.promoteMemberToAdmin.mutation");
+const removeMemberFromGroup = require("../../modules/groups/group.removeFromGroup.mutation");
 const mutations = [
   signupUser,
   loginUser,
   logoutUser,
   storeUserMessages,
-  deleteMessage,
-  createGroup,
-  addMemberToGroup,
+  deleteSelectedMessage,
+  createAGroup,
+  addToGroup,
   promoteMemberToAdmin,
   removeMemberFromGroup,
 ];

@@ -1,4 +1,5 @@
-const { Message } = require("../../../../../models");
+const { Message } = require("../../../models");
+const messageService = require("./message.services");
 
 const storeUserMessages = {
   Mutation: {
@@ -7,25 +8,18 @@ const storeUserMessages = {
       { senderId, recipientId, chatId, message, dateTime }
     ) => {
       try {
-        const insertedMessage = await Message.create({
-          senderId: senderId,
-          recipientId: recipientId,
-          chatId: chatId,
-          message: message,
-          dateTime: dateTime,
+        const insertedMessage = await messageService.storeMessage({
+          senderId,
+          recipientId,
+          chatId,
+          message,
+          dateTime,
         });
         if (insertedMessage) {
           return {
             success: true,
             message: "Message inserted successfully",
-            insertedMessage: {
-              messageId: insertedMessage.messageId,
-              senderId: insertedMessage.senderId,
-              recipientId: insertedMessage.recipientId,
-              chatId: insertedMessage.chatId,
-              message: insertedMessage.message,
-              dateTime: insertedMessage.dateTime,
-            },
+            insertedMessage,
           };
         } else {
           return {
